@@ -4,78 +4,20 @@ using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
-	public Animator playerAnim;
 	public Rigidbody playerRigid;
-	public float w_speed, wb_speed, olw_speed, rn_speed, ro_speed;
+	public float movementSpeed = 5f;
 	public bool walking;
 	public Transform playerTrans;
 
-
 	void FixedUpdate()
 	{
-		if (Input.GetKey(KeyCode.W))
-		{
-			playerRigid.velocity = transform.forward * w_speed * Time.deltaTime;
-		}
-		if (Input.GetKey(KeyCode.S))
-		{
-			playerRigid.velocity = -transform.forward * wb_speed * Time.deltaTime;
-		}
-	}
-	void Update()
-	{
-		if (Input.GetKeyDown(KeyCode.W))
-		{
-			playerAnim.SetTrigger("walk");
-			playerAnim.ResetTrigger("idle");
-			walking = true;
-			//steps1.SetActive(true);
-		}
-		if (Input.GetKeyUp(KeyCode.W))
-		{
-			playerAnim.ResetTrigger("walk");
-			playerAnim.SetTrigger("idle");
-			walking = false;
-			//steps1.SetActive(false);
-		}
-		if (Input.GetKeyDown(KeyCode.S))
-		{
-			playerAnim.SetTrigger("walkback");
-			playerAnim.ResetTrigger("idle");
-			//steps1.SetActive(true);
-		}
-		if (Input.GetKeyUp(KeyCode.S))
-		{
-			playerAnim.ResetTrigger("walkback");
-			playerAnim.SetTrigger("idle");
-			//steps1.SetActive(false);
-		}
-		if (Input.GetKey(KeyCode.A))
-		{
-			playerTrans.Rotate(0, -ro_speed * Time.deltaTime, 0);
-		}
-		if (Input.GetKey(KeyCode.D))
-		{
-			playerTrans.Rotate(0, ro_speed * Time.deltaTime, 0);
-		}
-		if (walking == true)
-		{
-			if (Input.GetKeyDown(KeyCode.LeftShift))
-			{
-				//steps1.SetActive(false);
-				//steps2.SetActive(true);
-				w_speed = w_speed + rn_speed;
-				playerAnim.SetTrigger("run");
-				playerAnim.ResetTrigger("walk");
-			}
-			if (Input.GetKeyUp(KeyCode.LeftShift))
-			{
-				//steps1.SetActive(true);
-				//steps2.SetActive(false);
-				w_speed = olw_speed;
-				playerAnim.ResetTrigger("run");
-				playerAnim.SetTrigger("walk");
-			}
-		}
+		float horizontalInput = Input.GetAxisRaw("Horizontal");
+		float verticalInput = Input.GetAxisRaw("Vertical");
+
+		Vector3 inputVector = new Vector3(horizontalInput, 0, verticalInput);
+		inputVector = Vector3.ClampMagnitude(inputVector, 1);
+
+		Vector3 movement = Quaternion.Euler(0, 45f, 0) * inputVector;
+		playerRigid.velocity = movement * movementSpeed * Time.fixedDeltaTime;
 	}
 }
