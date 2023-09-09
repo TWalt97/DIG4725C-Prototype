@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4dedb0ec1285c5d429f142fdae76261f, type: 3}
-  m_Name: InventoryItem_Arm
+  m_Script: {fileID: 11500000, guid: e6bd362efbffb424abf929e9d6f7731e, type: 3}
+  m_Name: LionHead
   m_EditorClassIdentifier: 
-  id: InventoryItem_Arm
-  displayName: 
-  icon: {fileID: 0}
-  prefab: {fileID: 0}
+  limbName: Lion Head
+  description: A detached lion's Head.
+  health: 20
+  gameObject: {fileID: 4789327781610142291, guid: f334c9f5e54248642bea5a0e13211a2b, type: 3}
+  limbType: 0
