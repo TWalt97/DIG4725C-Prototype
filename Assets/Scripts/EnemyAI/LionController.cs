@@ -9,13 +9,15 @@ public class LionController : MonoBehaviour
     private NavMeshAgent agent;
     public GameObject player;
 
-    private enum State {
+    private enum State
+    {
         Walking,
-        Circling,
         Attacking
     }
 
     private State state;
+
+    public float chargeSpeed;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,18 +28,28 @@ public class LionController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        switch (state) 
-        {
-            case State.Circling:
-                break;
-        }
-        if (Vector3.Distance(agent.transform.position, player.transform.position) > 8.0f)
+
+        if (Vector3.Distance(agent.transform.position, player.transform.position) > 5.0f && state == State.Walking)
         {
             agent.SetDestination(player.transform.position);
         }
-        else
+        else if (state == State.Walking)
         {
-            agent.SetDestination(agent.transform.position);
+            agent.enabled = false;
+            state = State.Attacking;
+            StartCoroutine(ChargeAttack());
         }
+    }
+
+    private IEnumerator ChargeAttack()
+    {
+        Rigidbody rb = GetComponent<Rigidbody>();
+        yield return new WaitForSeconds(0.5f);
+        rb.AddForce(gameObject.transform.forward * chargeSpeed, ForceMode.Impulse);
+        yield return new WaitForSeconds(1.0f);
+        rb.velocity = new Vector3(0, 0, 0);
+        state = State.Walking;
+        agent.enabled = true;
+        yield return null;
     }
 }
