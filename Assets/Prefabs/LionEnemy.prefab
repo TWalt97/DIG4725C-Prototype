@@ -166,5 +166,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16cc0b05a28e3c64ba7b9ae06625a82f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   chargeSpeed: 20
+  lionStats: {fileID: 11400000, guid: ca898d610e60fc145a42265c2e5bee9e, type: 2}

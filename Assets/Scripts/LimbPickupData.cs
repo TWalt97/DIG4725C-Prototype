@@ -16,8 +16,4 @@ public class LimbPickupData : ScriptableObject
         Head, LeftArm, RightArm, Legs
     }
 
-    [SerializeField]
-    LimbType limbType = new LimbType();
-
-
 }

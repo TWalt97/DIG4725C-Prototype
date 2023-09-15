@@ -7,7 +7,6 @@ using UnityEngine.AI;
 public class LionController : MonoBehaviour
 {
     private NavMeshAgent agent;
-    public GameObject player;
 
     private enum State
     {
@@ -18,27 +17,35 @@ public class LionController : MonoBehaviour
     private State state;
 
     public float chargeSpeed;
-    // Start is called before the first frame update
-    void Start()
+
+    public EnemyStats lionStats;
+    private float health;
+    
+    void OnEnable()
     {
         agent = GetComponent<NavMeshAgent>();
+        agent.speed = lionStats.speed;
+        health = lionStats.health;
         state = State.Walking;
     }
 
-    // Update is called once per frame
     void Update()
     {
-
-        if (Vector3.Distance(agent.transform.position, player.transform.position) > 5.0f && state == State.Walking)
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if(player)
         {
+            if (Vector3.Distance(agent.transform.position, player.transform.position) > lionStats.chargeRange && state == State.Walking)
+            {
             agent.SetDestination(player.transform.position);
-        }
-        else if (state == State.Walking)
-        {
+            }
+            else if (state == State.Walking)
+            {
             agent.enabled = false;
             state = State.Attacking;
             StartCoroutine(ChargeAttack());
+            }
         }
+        
     }
 
     private IEnumerator ChargeAttack()
