@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CharacterController : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class CharacterController : MonoBehaviour
 
 	//FloatReference stores scriptable objects that can represent any value
 	public FloatReference MaxHP;
+
+	public UnityEvent OnDamaged;
 
 	void FixedUpdate()
 	{
@@ -29,7 +32,7 @@ public class CharacterController : MonoBehaviour
 		if (other.gameObject.tag == "Enemy")
 		{
 			TakeDamage(1);
-			Debug.Log("Taking damage");
+			Invoke("OnDamaged", 0f);
 		}
 	}
 
