@@ -9,6 +9,9 @@ public class CharacterController : MonoBehaviour
 	public bool walking;
 	public Transform playerTrans;
 
+	//FloatReference stores scriptable objects that can represent any value
+	public FloatReference MaxHP;
+
 	void FixedUpdate()
 	{
 		float horizontalInput = Input.GetAxisRaw("Horizontal");
@@ -19,5 +22,21 @@ public class CharacterController : MonoBehaviour
 
 		Vector3 movement = Quaternion.Euler(0, 45f, 0) * inputVector;
 		playerRigid.velocity = movement * movementSpeed * Time.fixedDeltaTime;
+	}
+
+	private void OnTriggerEnter(Collider other) 
+	{
+		if (other.gameObject.tag == "Enemy")
+		{
+			TakeDamage(1);
+			Debug.Log("Taking damage");
+		}
+	}
+
+	public void TakeDamage(int damage)
+	{
+		//We modify the scriptable object value, which is not stored on the player
+		//This way we can access that value from anywhere else without being dependent on the player existing
+		MaxHP.Value -= damage;
 	}
 }
