@@ -32,7 +32,7 @@ public class CharacterController : MonoBehaviour
 		if (other.gameObject.tag == "Enemy")
 		{
 			TakeDamage(1);
-			Invoke("OnDamaged", 0f);
+			OnDamaged.Invoke();
 		}
 	}
 
