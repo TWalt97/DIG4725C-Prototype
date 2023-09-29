@@ -5,6 +5,7 @@ using UnityEngine;
 
 public abstract class Creature : MonoBehaviour
 {
+    [Header("Creature Stats")]
     [SerializeField] private float health;
     [SerializeField] private float attackSpeed;
 
@@ -22,7 +23,7 @@ public abstract class Creature : MonoBehaviour
         Major
     }
     public CreatureType creatureType;
-    
+
     [SerializeField] List<GameObject> drops;
 
     private void OnEnable()
